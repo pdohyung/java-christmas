@@ -5,7 +5,7 @@ public enum Discount {
     WEEKDAY("평일 할인", 2_023),
     WEEKEND("주말 할인", 2_023),
     SPECIAL("특별 할인", 1_000),
-    GIFT("증정 이벤트", 120_000);
+    GIFT("증정 이벤트", 25_000);
 
     private final String name;
     private final int price;
