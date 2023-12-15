@@ -6,6 +6,8 @@ import christmas.view.OutputView;
 
 import java.util.Map;
 
+import static christmas.util.Constants.*;
+
 public class ChristmasController {
     private final InputView inputView;
     private final OutputView outputView;
@@ -21,6 +23,8 @@ public class ChristmasController {
         Map<Menu, Integer> orderMenus = inputView.inputOrderMenus();
         outputView.printStartEventPreview(visitDate);
         showOrderMenu(orderMenus);
+        int totalPrice = showTotalPrice(orderMenus);
+        showGift(totalPrice);
     }
 
     public void showOrderMenu(Map<Menu, Integer> orderMenus) {
@@ -28,5 +32,22 @@ public class ChristmasController {
         for (Menu menu : orderMenus.keySet()) {
             outputView.printOrderMenus(menu.getName(), orderMenus.get(menu));
         }
+    }
+
+    public int showTotalPrice(Map<Menu, Integer> orderMenus) {
+        int totalPrice = 0;
+        for (Menu menu : orderMenus.keySet()) {
+            totalPrice += menu.getPrice() * orderMenus.get(menu);
+        }
+        outputView.printTotalPrice(totalPrice);
+        return totalPrice;
+    }
+
+    public void showGift(int totalPrice) {
+        if (totalPrice < GIFT_STANDARD) {
+            outputView.printGift(false);
+            return;
+        }
+        outputView.printGift(true);
     }
 }
