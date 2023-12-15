@@ -57,6 +57,10 @@ public class ChristmasController {
 
     public void showTotalDiscount(Map<Discount, Integer> totalDiscount) {
         outputView.printStartDiscount();
+        if (totalDiscount.isEmpty()) {
+            outputView.printNone();
+            return;
+        }
         for (Discount discount : totalDiscount.keySet()) {
             outputView.printDiscount(discount.getName(), totalDiscount.get(discount));
         }

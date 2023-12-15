@@ -8,4 +8,5 @@ public class Constants {
     public static final int DEFAULT_DISCOUNT = 1_000;
     public static final int WEEKDAY = 1;
     public static final int WEEKEND = 2;
+    public static final int MIN_ORDER_PRICE = 10_000;
 }

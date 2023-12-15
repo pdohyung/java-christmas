@@ -4,7 +4,6 @@ import christmas.domain.enums.Category;
 import christmas.domain.enums.Days;
 import christmas.domain.enums.Discount;
 import christmas.domain.enums.Menu;
-import christmas.util.Constants;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -29,6 +28,9 @@ public class TotalDiscount {
 
     private Map<Discount, Integer> generateTotalDiscount(int visitDate, Map<Menu, Integer> orderMenus, int totalPrice) {
         Map<Discount, Integer> initialTotalDiscount = new LinkedHashMap<>();
+        if (totalPrice < MIN_ORDER_PRICE) {
+            return initialTotalDiscount;
+        }
         calculateChristmasDDay(visitDate, initialTotalDiscount);
         calculateWeek(visitDate, initialTotalDiscount, orderMenus);
         calculateSpecial(visitDate, initialTotalDiscount);
