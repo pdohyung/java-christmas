@@ -32,15 +32,15 @@ public class TotalDiscount {
         calculateChristmasDDay(visitDate, initialTotalDiscount);
         calculateWeek(visitDate, initialTotalDiscount, orderMenus);
         calculateSpecial(visitDate, initialTotalDiscount);
-        calculateGift(totalPrice);
+        calculateGift(totalPrice, initialTotalDiscount);
         return initialTotalDiscount;
     }
 
     private void calculateChristmasDDay(int visitDate, Map<Discount, Integer> totalDiscount) {
-        if (visitDate > CHRISTMAS_DATE) {
+        if (visitDate >= CHRISTMAS_DATE) {
             return;
         }
-        totalDiscount.put(CHRISTMAS_D_DAY, DEFAULT_DISCOUNT * CHRISTMAS_D_DAY.getPrice());
+        totalDiscount.put(CHRISTMAS_D_DAY, DEFAULT_DISCOUNT + visitDate * CHRISTMAS_D_DAY.getPrice());
     }
 
     private void calculateWeek(int visitDate, Map<Discount, Integer> totalDiscount, Map<Menu, Integer> orderMenus) {
@@ -60,7 +60,7 @@ public class TotalDiscount {
         }
     }
 
-    private void calculateGift(int totalPrice) {
+    private void calculateGift(int totalPrice, Map<Discount, Integer> totalDiscount) {
         if (totalPrice >= GIFT_STANDARD) {
             totalDiscount.put(GIFT, GIFT.getPrice());
         }

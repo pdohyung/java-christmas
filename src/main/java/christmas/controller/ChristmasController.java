@@ -1,5 +1,7 @@
 package christmas.controller;
 
+import christmas.domain.TotalDiscount;
+import christmas.domain.enums.Discount;
 import christmas.domain.enums.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -25,6 +27,8 @@ public class ChristmasController {
         showOrderMenu(orderMenus);
         int totalPrice = showTotalPrice(orderMenus);
         showGift(totalPrice);
+        Map<Discount, Integer> totalDiscount = new TotalDiscount(visitDate, orderMenus, totalPrice).getTotalDiscount();
+        showTotalDiscount(totalDiscount);
     }
 
     public void showOrderMenu(Map<Menu, Integer> orderMenus) {
@@ -49,5 +53,12 @@ public class ChristmasController {
             return;
         }
         outputView.printGift(true);
+    }
+
+    public void showTotalDiscount(Map<Discount, Integer> totalDiscount) {
+        outputView.printStartDiscount();
+        for (Discount discount : totalDiscount.keySet()) {
+            outputView.printDiscount(discount.getName(), totalDiscount.get(discount));
+        }
     }
 }

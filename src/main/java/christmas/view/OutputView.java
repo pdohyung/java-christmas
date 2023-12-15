@@ -10,7 +10,7 @@ public class OutputView {
     private static final String PRINT_START_DISCOUNT = "\n<혜택 내역>";
     private static final String PRINT_ORDER_MENU = "{0} {1}개";
     private static final String PRINT_TOTAL_PRICE = "\n<할인 전 총주문 금액>\n{0}원";
-    private static final String PRINT_DISCOUNT = "{0}: -{1}";
+    private static final String PRINT_DISCOUNT = "{0}: -{1}원";
     private static final String PRINT_GIFT = "샴페인 1개";
     private static final String NONE = "없음";
 
@@ -48,7 +48,7 @@ public class OutputView {
     }
 
     public void printDiscount(String discountName, int discountPrice) {
-        System.out.println(format(PRINT_DISCOUNT, discountPrice, discountPrice));
+        System.out.println(format(PRINT_DISCOUNT, discountName, discountPrice));
     }
 
     public void printNone() {
