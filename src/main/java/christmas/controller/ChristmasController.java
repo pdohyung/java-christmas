@@ -8,6 +8,7 @@ import christmas.view.OutputView;
 
 import java.util.Map;
 
+import static christmas.domain.enums.Discount.GIFT;
 import static christmas.util.Constants.*;
 
 public class ChristmasController {
@@ -20,15 +21,27 @@ public class ChristmasController {
     }
 
     public void run() {
-        outputView.printEventStart();
-        int visitDate = inputView.inputVisitDate();
-        Map<Menu, Integer> orderMenus = inputView.inputOrderMenus();
+        int visitDate = getVisitDate();
         outputView.printStartEventPreview(visitDate);
-        showOrderMenu(orderMenus);
+        Map<Menu, Integer> orderMenus = getOrderMenus();
         int totalPrice = showTotalPrice(orderMenus);
-        showGift(totalPrice);
         Map<Discount, Integer> totalDiscount = new TotalDiscount(visitDate, orderMenus, totalPrice).getTotalDiscount();
         showTotalDiscount(totalDiscount);
+        int totalDiscountPrice = getTotalDiscountPrice(totalDiscount);
+        outputView.printTotalDiscountPrice(totalDiscountPrice);
+        int finalPrice = getFinalPrice(totalPrice, totalDiscountPrice);
+        outputView.printFinalPrice(finalPrice);
+    }
+
+    public int getVisitDate() {
+        outputView.printEventStart();
+        return inputView.inputVisitDate();
+    }
+
+    public Map<Menu, Integer> getOrderMenus() {
+        Map<Menu, Integer> orderMenus = inputView.inputOrderMenus();
+        showOrderMenu(orderMenus);
+        return orderMenus;
     }
 
     public void showOrderMenu(Map<Menu, Integer> orderMenus) {
@@ -44,6 +57,7 @@ public class ChristmasController {
             totalPrice += menu.getPrice() * orderMenus.get(menu);
         }
         outputView.printTotalPrice(totalPrice);
+        showGift(totalPrice);
         return totalPrice;
     }
 
@@ -64,5 +78,21 @@ public class ChristmasController {
         for (Discount discount : totalDiscount.keySet()) {
             outputView.printDiscount(discount.getName(), totalDiscount.get(discount));
         }
+    }
+
+    public int getTotalDiscountPrice(Map<Discount, Integer> totalDiscount) {
+        return totalDiscount.keySet().stream()
+                .mapToInt(totalDiscount::get)
+                .sum();
+    }
+
+    public int getFinalPrice(int totalPrice, int totalDiscountPrice) {
+        if (totalDiscountPrice == ZERO) {
+            return totalPrice;
+        }
+        if (totalPrice >= GIFT_STANDARD) {
+            return totalPrice - totalDiscountPrice + GIFT.getPrice();
+        }
+        return totalPrice - totalDiscountPrice;
     }
 }

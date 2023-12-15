@@ -1,5 +1,8 @@
 package christmas.view;
 
+import christmas.util.Constants;
+
+import static christmas.util.Constants.ZERO;
 import static java.text.MessageFormat.format;
 
 public class OutputView {
@@ -8,11 +11,15 @@ public class OutputView {
     private static final String PRINT_START_ORDER_MENUS = "\n<주문 메뉴>";
     private static final String PRINT_START_GIFT = "\n<증정 메뉴>";
     private static final String PRINT_START_DISCOUNT = "\n<혜택 내역>";
+    private static final String PRINT_START_TOTAL_DISCOUNT_PRICE = "\n<총혜택 금액>";
+    private static final String PRINT_TOTAL_DISCOUNT_PRICE = "-{0}원";
     private static final String PRINT_ORDER_MENU = "{0} {1}개";
     private static final String PRINT_TOTAL_PRICE = "\n<할인 전 총주문 금액>\n{0}원";
     private static final String PRINT_DISCOUNT = "{0}: -{1}원";
     private static final String PRINT_GIFT = "샴페인 1개";
+    private static final String PRINT_FINAL_PRICE = "\n<할인 후 예상 결제 금액>\n{0}원";
     private static final String NONE = "없음";
+    private static final String DISCOUNT_ZERO = "0원";
 
     public void printEventStart() {
         System.out.println(PRINT_EVENT_START_MESSAGE);
@@ -53,5 +60,18 @@ public class OutputView {
 
     public void printNone() {
         System.out.println(NONE);
+    }
+
+    public void printTotalDiscountPrice(int totalDiscountPrice) {
+        System.out.println(PRINT_START_TOTAL_DISCOUNT_PRICE);
+        if (totalDiscountPrice == ZERO) {
+            System.out.println(DISCOUNT_ZERO);
+            return;
+        }
+        System.out.println(format(PRINT_TOTAL_DISCOUNT_PRICE, totalDiscountPrice));
+    }
+
+    public void printFinalPrice(int finalPrice) {
+        System.out.println(format(PRINT_FINAL_PRICE, finalPrice));
     }
 }
