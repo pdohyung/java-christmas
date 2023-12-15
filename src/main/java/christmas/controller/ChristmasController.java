@@ -1,11 +1,15 @@
 package christmas.controller;
 
 import christmas.domain.TotalDiscount;
+import christmas.domain.enums.Badge;
 import christmas.domain.enums.Discount;
 import christmas.domain.enums.Menu;
+import christmas.util.Constants;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
 
 import static christmas.domain.enums.Discount.GIFT;
@@ -31,6 +35,7 @@ public class ChristmasController {
         outputView.printTotalDiscountPrice(totalDiscountPrice);
         int finalPrice = getFinalPrice(totalPrice, totalDiscountPrice);
         outputView.printFinalPrice(finalPrice);
+        showBadge(totalDiscountPrice);
     }
 
     public int getVisitDate() {
@@ -94,5 +99,15 @@ public class ChristmasController {
             return totalPrice - totalDiscountPrice + GIFT.getPrice();
         }
         return totalPrice - totalDiscountPrice;
+    }
+
+    public void showBadge(int totalDiscountPrice) {
+        String badgeName = Arrays.stream(Badge.values())
+                .sorted(Comparator.comparingInt(Badge::getPrice).reversed()) // 역순 정렬
+                .filter(badge -> totalDiscountPrice >= badge.getPrice())
+                .map(Badge::getName)
+                .findFirst()
+                .orElse(NONE);
+        outputView.printBadge(badgeName);
     }
 }

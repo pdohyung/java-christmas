@@ -10,4 +10,5 @@ public class Constants {
     public static final int WEEKEND = 2;
     public static final int MIN_ORDER_PRICE = 10_000;
     public static final int ZERO = 0;
+    public static final String NONE = "없음";
 }

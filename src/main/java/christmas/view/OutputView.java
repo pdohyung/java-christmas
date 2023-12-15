@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.util.Constants;
 
+import static christmas.util.Constants.*;
 import static christmas.util.Constants.ZERO;
 import static java.text.MessageFormat.format;
 
@@ -18,7 +19,7 @@ public class OutputView {
     private static final String PRINT_DISCOUNT = "{0}: -{1}원";
     private static final String PRINT_GIFT = "샴페인 1개";
     private static final String PRINT_FINAL_PRICE = "\n<할인 후 예상 결제 금액>\n{0}원";
-    private static final String NONE = "없음";
+    private static final String PRINT_BADGE = "\n<12월 이벤트 배지>\n{0}";
     private static final String DISCOUNT_ZERO = "0원";
 
     public void printEventStart() {
@@ -73,5 +74,9 @@ public class OutputView {
 
     public void printFinalPrice(int finalPrice) {
         System.out.println(format(PRINT_FINAL_PRICE, finalPrice));
+    }
+
+    public void printBadge(String badgeName) {
+        System.out.println(format(PRINT_BADGE, badgeName));
     }
 }
